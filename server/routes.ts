@@ -4,46 +4,45 @@ const router = Router();
 
 const prisma = new PrismaClient();
 
-router.post("/users",async (req,res)=>{
+router.post("/posts",async (req,res)=>{
     
-    const {name, email} = req.body
+    const {content, likes} = req.body
 
-    const user = await prisma.user.create({
+    const post = await prisma.post.create({
         data:{
-            name,
-            email,
+            content,
+            likes
         }
     })  
-    return res.json(user)
+    return res.json(post)
 })
-router.get("/users", async (req,res)=>{
+router.get("/posts", async (req,res)=>{
 
-    const users = await prisma.user.findMany()
+    const users = await prisma.post.findMany()
     return res.json(users)
 
 })
-router.delete("/users/:id", async (req,res)=>{
+router.delete("/posts/:id", async (req,res)=>{
     const {id} = req.params
-    const users = await prisma.user.delete({
+    const users = await prisma.post.delete({
         where:{
             id: String(id)  
         },
     })
     return res.json(users)
 })
-router.put("/users/:id",async (req,res) => {
+router.put("/posts/:id",async (req,res) => {
 
     const {id} = req.params
-    const {name,email} = req.body
+    const {content} = req.body
 
-    const users = await prisma.user.update({
+    const users = await prisma.post.update({
 
         where:{
             id:String(id),
         },
         data:{
-            name:name,
-            email:email
+            content:content
         }
     })
     return res.json(users)
