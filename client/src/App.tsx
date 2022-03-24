@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
 import axios from "axios"
 import "./styles/app.css"
-import Post from './components/Post';
-
+import { AiFillDelete, AiOutlineLike, AiFillLike } from 'react-icons/ai';
+import "./components/Post/styles.css"
+import { Post } from './components/Post/index';
 type Post = {
+  id:string;
   content: string;
 }
 
@@ -11,10 +13,17 @@ type Post = {
 function App() {
   
   const url = "http://localhost:3001/posts"
+ 
+
   const [inputPost, setInputPost] = useState("");
   const [lenghtPost, setLenghtPost] = useState(300);
   const [post, setPost] = useState<Post[]>([])
 
+  async function deletePost(id:string) {
+
+    await axios.delete(url+"/"+id)
+    get();
+  }
   async function get() {
     await axios.get(url).then(response => {
       setPost(response.data)
@@ -27,6 +36,7 @@ function App() {
     })
     get();
   }
+
   useEffect(() => {
     get();
   }, [])
@@ -53,7 +63,7 @@ function App() {
       <ul>
         {
           post.map(item => (
-            <Post>{item.content}</Post>
+            <Post deletePost={()=>deletePost(item.id)}>{item.content}</Post>
           ))
         }
       </ul>

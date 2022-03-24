@@ -21,6 +21,9 @@
     padding-left: 1rem;
     border-radius: 0.25rem;
 }
+.delete-post{
+    cursor: pointer;
+}
 .like{
     color: #2e2e2e;
     cursor: pointer;

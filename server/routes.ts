@@ -34,7 +34,7 @@ router.delete("/posts/:id", async (req,res)=>{
 router.put("/posts/:id",async (req,res) => {
 
     const {id} = req.params
-    const {content} = req.body
+    const {content,likes} = req.body
 
     const users = await prisma.post.update({
 
@@ -42,7 +42,9 @@ router.put("/posts/:id",async (req,res) => {
             id:String(id),
         },
         data:{
-            content:content
+            content:content,
+            likes:likes
+
         }
     })
     return res.json(users)

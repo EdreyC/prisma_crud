@@ -1,37 +1,38 @@
+import axios from "axios"
 import { useEffect, useState } from "react"
 import { AiFillLike, AiOutlineLike } from "react-icons/ai"
-import "./styles.css"
+import {AiFillDelete} from"react-icons/ai"
+
 
 type Props = {
-    children:string
-}
+    children:any
+    deletePost:()=>void;
+} 
 
-export default function Post(props:Props) {
-    const [like, setLike] = useState(true)
-    const [countLike,setCountLike] = useState(0)
 
-    function handleButtonLike() {
-        setLike(!like)
-        if(like==true){
-            setCountLike(1)
-        }
-        else{
-            setCountLike(0)
-        }
-    }
+export function Post(props:Props) {
+    const [Like, setLike] = useState(false)
    
+    function handleLike(){
+        setLike(!Like)
+    }
+   return (
+    <div className="container-post">
+    {props?.children}
 
-    return (
-        <div className="container-post">
-            {props.children}
-            <div className="like-post">
-                {like? (<AiOutlineLike onClick={handleButtonLike} className='like' size={23} />) : (<AiFillLike
-                    onClick={handleButtonLike} className='like' size={23} /> )}
-                 <span>
-                    {countLike}
-                </span>
-            </div>
-          
-        </div>
-    )
+
+    <AiFillDelete className="delete-post" color="#2e2e2e" onClick={props.deletePost}/>
+
+    <div className="like-post">
+        {Like==false? (<AiOutlineLike onClick={handleLike} className='like' size={23} />) : (<AiFillLike
+            onClick={handleLike} className='like' size={23} /> )}
+         <span>
+            {Like ===false? "" : 1}
+        </span>
+    </div>
+  
+</div>
+   )
+    
+  
 }
